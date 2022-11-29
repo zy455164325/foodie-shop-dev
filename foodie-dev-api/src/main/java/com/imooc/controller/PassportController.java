@@ -4,6 +4,8 @@ import com.imooc.pojo.bo.UserBO;
 import com.imooc.service.IUserService;
 import com.imooc.service.impl.UserServiceImpl;
 import com.imooc.utils.IMoocJSONResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
  *@Date 15:18 2022/11/24
  *Version 1.0
  **/
+@Api(value="注册登录",tags = {"用于用户注册登录的相关接口"})
 @RestController
 @RequestMapping("passport")
 public class PassportController {
@@ -27,6 +30,7 @@ public class PassportController {
      * @param username 用户名称
      * @return
      */
+    @ApiOperation(value = "用户是否存在",notes = "用户是否存在",httpMethod = "GET")
     @GetMapping("/usernameIsExist")
     public IMoocJSONResult usernameIsExist(@RequestParam(name ="username") String username) {
         //1.判断用户名称不能为空
@@ -48,6 +52,7 @@ public class PassportController {
      * @param userBO 前端请求的用户json数据对象
      * @return
      */
+    @ApiOperation(value = "用户注册",notes = "用户注册",httpMethod = "POST")
     @PostMapping("/regist")
     public IMoocJSONResult regist(@RequestBody UserBO userBO) {
         String username=userBO.getUsername();

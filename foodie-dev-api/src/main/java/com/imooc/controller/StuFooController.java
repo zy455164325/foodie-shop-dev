@@ -5,6 +5,7 @@ import com.imooc.service.IStuService;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  *@ClassName StuFooController
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  *@Date 15:18 2022/11/24
  *Version 1.0
  **/
+@ApiIgnore
 @RestController
 public class StuFooController {
     @Autowired
