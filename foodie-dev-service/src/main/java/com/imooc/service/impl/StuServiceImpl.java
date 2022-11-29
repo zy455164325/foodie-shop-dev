@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StuServiceImpl implements IStuService {
     @Autowired
-    @SuppressWarnings("all")
     private StuMapper stuMapper;
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -27,15 +26,23 @@ public class StuServiceImpl implements IStuService {
         return stuMapper.selectByPrimaryKey(id);
     }
 
+    @Transactional(propagation=Propagation.REQUIRED)
     @Override
-    public void saveStu() {
+    public void saveStu(Stu stu) {
+        stuMapper.insert(stu);
     }
 
+    @Transactional(propagation=Propagation.REQUIRED)
     @Override
     public void updateStu(int id) {
-
+        Stu stu=new Stu();
+        stu.setId(id);
+        stu.setName("lucy");
+        stu.setAge(18);
+        stuMapper.updateByPrimaryKey(stu);
     }
 
+    @Transactional(propagation=Propagation.REQUIRED)
     @Override
     public void deleteStu(int id) {
         stuMapper.deleteByPrimaryKey(id);

@@ -1,9 +1,10 @@
 package com.imooc.controller;
 
+import com.imooc.pojo.Stu;
 import com.imooc.service.IStuService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *@ClassName StuFooController
@@ -20,6 +21,26 @@ public class StuFooController {
     @GetMapping("/getStu")
     public Object getStu(int id) {
         return stuService.getStu(id);
+    }
+
+    @PostMapping("/saveStu")
+    public Object saveStu() {
+        Stu stu=new Stu();
+        stu.setName("braveZeng");
+        stu.setAge(27);
+        stuService.saveStu(stu);
+        return "200";
+    }
+
+    @PutMapping("/updateStu")
+    public Object updateStu(int id) {
+        stuService.updateStu(id);
+        return "200";
+    }
+    @DeleteMapping("/deleteStu")
+    public Object deleteStu(int id) {
+        stuService.deleteStu(id);
+        return "200";
     }
 
 

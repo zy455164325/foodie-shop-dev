@@ -14,11 +14,23 @@ public interface IStuService {
      * @return Stu: 学生信息
      **/
     public Stu getStu(int id);
-
-    public void saveStu();
-
+    /**
+     * @Author braveZeng
+     * @Description 新增学生
+     * @Date 18:07 2022/11/24
+     **/
+    public void saveStu(Stu stu);
+    /**
+     * @Author braveZeng
+     * @Description 根据学生id修改学生信息
+     * @Date 18:07 2022/11/24
+     **/
     public void updateStu(int id);
-
+    /**
+     * @Author braveZeng
+     * @Description 根据学生id删除学生信息
+     * @Date 18:07 2022/11/24
+     **/
     public void deleteStu(int id);
 
 
