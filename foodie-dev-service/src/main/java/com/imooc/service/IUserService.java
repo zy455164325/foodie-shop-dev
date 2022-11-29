@@ -25,5 +25,15 @@ public interface IUserService {
     public Users createUser(UserBO userBo);
 
 
+    /**
+     * @Author braveZeng
+     * @Description 检查用户名和密码是否匹配
+     * @Date 17:29 2022/11/29
+     * @Param  username:用户名，password：密码
+     * @return 用户信息
+     **/
+    public Users queryUserForLogin(String username,String password);
+
+
 
 }
