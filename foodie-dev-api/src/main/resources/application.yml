@@ -27,6 +27,8 @@ spring:
 mybatis:
   type-aliases-package: com.imooc.pojo
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #日志输出mybatis sql打印，仅用与开发、测试环境
 
 
 ##################################################

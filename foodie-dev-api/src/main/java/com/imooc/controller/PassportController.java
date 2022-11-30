@@ -141,4 +141,20 @@ public class PassportController {
         userResult.setBirthday(null);
         return userResult;
     }
+    /**
+     * @Author braveZeng
+     * @Description 用户退出登录
+     * @Date 15:32 2022/11/30
+     **/
+    @ApiOperation(value = "用户退出登录",notes = "用户退出登录",httpMethod = "POST")
+    @PostMapping("/logout")
+    public IMoocJSONResult logout(@RequestParam(name ="userId") String userId,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
+        //清楚用户相关信息的cookie
+        CookieUtils.deleteCookie(request,response,"user");
+        // TODO 用户退出登录，需要清空购物车
+        // TODO 分布式会话中需要清除用户数据
+        return IMoocJSONResult.ok();
+    }
 }

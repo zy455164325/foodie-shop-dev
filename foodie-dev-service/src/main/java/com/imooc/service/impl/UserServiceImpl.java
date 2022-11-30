@@ -40,6 +40,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean queryUsernameIsExist(String username) {
+//        try {
+//            //休眠3秒
+//            Thread.sleep(3000);
+//        }catch (InterruptedException ex){
+//            ex.getStackTrace();
+//        }
         //创建一个userExample查询条件
         Example userExample=new Example(Users.class);
         userExample.createCriteria().andEqualTo("username",username);
@@ -82,6 +88,12 @@ public class UserServiceImpl implements IUserService {
         userCriteria.andEqualTo("username",username);
         userCriteria.andEqualTo("password",password);
 
+//        try {
+//            //休眠1秒
+//            Thread.sleep(1000);
+//        }catch (InterruptedException ex){
+//            ex.getStackTrace();
+//        }
         Users result=usersMapper.selectOneByExample(userExample);
         return result;
     }
