@@ -4,6 +4,9 @@ package com.imooc.service;
 import com.imooc.pojo.Stu;
 import com.imooc.pojo.Users;
 import com.imooc.pojo.bo.UserBO;
+import org.apache.ibatis.jdbc.SQL;
+
+import java.sql.SQLException;
 
 public interface IUserService {
     /**

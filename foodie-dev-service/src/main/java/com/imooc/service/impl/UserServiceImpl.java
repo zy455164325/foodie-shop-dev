@@ -11,6 +11,8 @@ import com.imooc.service.IUserService;
 import com.imooc.utils.DateUtil;
 import com.imooc.utils.MD5Utils;
 import org.n3r.idworker.Sid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,6 +30,8 @@ import java.util.Date;
  **/
 @Service
 public class UserServiceImpl implements IUserService {
+    private  static final Logger log=LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UsersMapper usersMapper;
 
