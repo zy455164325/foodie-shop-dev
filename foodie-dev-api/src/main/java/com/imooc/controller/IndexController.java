@@ -38,7 +38,7 @@ public class IndexController {
     @Autowired
     private ICategoryService categoryService;
 
-    @ApiOperation(value = "获取首页轮播图列表",notes = "获取首页轮播图列表",httpMethod = "POST")
+    @ApiOperation(value = "获取首页轮播图列表",notes = "获取首页轮播图列表",httpMethod = "GET")
     @GetMapping("/carousel")
     public IMoocJSONResult carousel() {
         List<Carousel> result=carouselService.queryAll(YesOrNo.YES.type);
