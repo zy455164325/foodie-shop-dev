@@ -6,6 +6,7 @@ import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
 import com.imooc.service.IItemsService;
 import com.imooc.utils.IMoocJSONResult;
+import com.imooc.vo.CommentLevelCountVO;
 import com.imooc.vo.ItemInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,10 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -62,5 +60,17 @@ public class ItemsController {
     }
 
 
+
+    @ApiOperation(value = "查询商品评价等级",notes = "查询商品评价等级",httpMethod = "GET")
+    @GetMapping("/commentLevel")
+    public IMoocJSONResult commentLevel(
+            @ApiParam(name="itemId",value="商品id" ,required = true)
+            @RequestParam String itemId) {
+        if(StringUtils.isBlank(itemId)){
+            return IMoocJSONResult.errorMsg(null);
+        }
+        CommentLevelCountVO levelCountVO=itemsService.queryCommentCounts(itemId);
+        return IMoocJSONResult.ok(levelCountVO);
+    }
 
 }
