@@ -5,6 +5,7 @@ import com.imooc.pojo.Items;
 import com.imooc.pojo.ItemsImg;
 import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
+import com.imooc.utils.PagedGridResult;
 import com.imooc.vo.CommentLevelCountVO;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface IItemsService {
      * @Param  商品id
      * @return Items 商品信息
      **/
-    public Items getItemById(String itemId);
+    Items getItemById(String itemId);
 
     /**
      * @Author braveZeng
@@ -30,7 +31,7 @@ public interface IItemsService {
      * @Param 商品id
      * @return 商品图片列表
      **/
-    public List<ItemsImg> queryItemImgList(String itemId);
+    List<ItemsImg> queryItemImgList(String itemId);
 
     /**
      * @Author braveZeng
@@ -39,7 +40,7 @@ public interface IItemsService {
      * @Param 商品id
      * @return 商品规格列表
      **/
-    public List<ItemsSpec> queryItemSpecList(String itemId);
+    List<ItemsSpec> queryItemSpecList(String itemId);
 
     /**
      * @Author braveZeng
@@ -48,13 +49,42 @@ public interface IItemsService {
      * @Param  商品id
      * @return  商品参数信息
      **/
-    public ItemsParam queryItemParam(String itemId);
+    ItemsParam queryItemParam(String itemId);
 
     /**
      * 根据商品id查询商品的评级等级数量
-     *
      * @param itemId
      * @return
      */
-    public CommentLevelCountVO queryCommentCounts(String itemId);
+     CommentLevelCountVO queryCommentCounts(String itemId);
+
+
+    /**
+     * 根据商品编号和商品评价等级获取商品评价信息(分页)
+     * @param itemId
+     * @param level
+     * @return 商品评价信息
+     */
+     PagedGridResult queryPagedComments(String itemId, String level, Integer page, Integer pageSize);
+
+    /**
+     * 根据关键字搜索商品列表
+     * @param keywords 搜索内容
+     * @param sort 排序
+     * @param page
+     * @param pageSize
+     * @return
+     */
+     PagedGridResult searchPagedItems  (String keywords, String sort, Integer page, Integer pageSize);
+
+    /**
+     * 根据商品三级分类搜索商品列表
+     * @param catId
+     * @param sort
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    PagedGridResult searchItemsByThirdCat(String catId, String sort, Integer page, Integer pageSize);
+
 }

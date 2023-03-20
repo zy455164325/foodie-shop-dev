@@ -21,7 +21,7 @@ public class CommentLevelCountVO {
     /**
      * 商品差评数量
      */
-    private Integer badCount;
+    private Integer badCounts;
 
 
     public Integer getTotalCounts() {
@@ -48,12 +48,11 @@ public class CommentLevelCountVO {
         this.normalCounts = normalCounts;
     }
 
-    public Integer getBadCount() {
-        return badCount;
+    public Integer getBadCounts() {
+        return badCounts;
     }
 
-    public void setBadCount(Integer badCount) {
-        this.badCount = badCount;
+    public void setBadCounts(Integer badCounts) {
+        this.badCounts = badCounts;
     }
-
 }

@@ -6,6 +6,7 @@ import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
 import com.imooc.service.IItemsService;
 import com.imooc.utils.IMoocJSONResult;
+import com.imooc.utils.PagedGridResult;
 import com.imooc.vo.CommentLevelCountVO;
 import com.imooc.vo.ItemInfoVO;
 import io.swagger.annotations.Api;
@@ -30,7 +31,7 @@ import java.util.List;
 @Api(value="商品接口",tags = {"商品信息展示得相关接口"})
 @RestController
 @RequestMapping("items")
-public class ItemsController {
+public class ItemsController extends BaseController{
 
     private  final static Logger log = LoggerFactory.getLogger(ItemsController.class);
     @Autowired
@@ -71,6 +72,91 @@ public class ItemsController {
         }
         CommentLevelCountVO levelCountVO=itemsService.queryCommentCounts(itemId);
         return IMoocJSONResult.ok(levelCountVO);
+    }
+
+
+    @ApiOperation(value = "查询商品评价",notes = "查询商品评价",httpMethod = "GET")
+    @GetMapping("/comments")
+    public IMoocJSONResult comments(
+            @ApiParam(name="itemId",value="商品id" ,required = true)
+            @RequestParam String itemId,
+            @ApiParam(name="level",value="商品评价等级" ,required = false)
+            @RequestParam String level,
+            @ApiParam(name="page",value="查询下一页的第几页" ,required = false)
+            @RequestParam Integer page,
+            @ApiParam(name="pageSize",value="分页的每一页显示的记录数" ,required = false)
+            @RequestParam Integer pageSize) {
+        if(StringUtils.isBlank(itemId)){
+            return IMoocJSONResult.errorMsg(null);
+        }
+
+        if(page == null){
+            page = 1;
+        }
+
+        if(pageSize == null){
+            pageSize= COMMENT_PAGE_SIZE;
+        }
+        PagedGridResult grid=itemsService.queryPagedComments(itemId,level,page,pageSize);
+        return IMoocJSONResult.ok(grid);
+    }
+
+
+
+
+
+
+    @ApiOperation(value = "搜索商品列表",notes = "搜索商品列表",httpMethod = "GET")
+    @GetMapping("/search")
+    public IMoocJSONResult search(
+            @ApiParam(name="keywords",value="关键字" ,required = true)
+            @RequestParam String keywords,
+            @ApiParam(name="sort",value="排序" ,required = false)
+            @RequestParam String sort,
+            @ApiParam(name="page",value="查询下一页的第几页" ,required = false)
+            @RequestParam Integer page,
+            @ApiParam(name="pageSize",value="分页的每一页显示的记录数" ,required = false)
+            @RequestParam Integer pageSize) {
+        if(StringUtils.isBlank(keywords)){
+            return IMoocJSONResult.errorMsg(null);
+        }
+
+        if(page == null){
+            page = 1;
+        }
+
+        if(pageSize == null){
+            pageSize= PAGE_SIZE;
+        }
+        PagedGridResult grid=itemsService.searchPagedItems(keywords,sort,page,pageSize);
+        return IMoocJSONResult.ok(grid);
+    }
+
+
+    @ApiOperation(value = "通过分类id搜索商品列表",notes = "通过分类id搜索商品列表",httpMethod = "GET")
+    @GetMapping("/catItems")
+    public IMoocJSONResult searchItemsByThirdCat(
+            @ApiParam(name="catId",value="三级分类id" ,required = true)
+            @RequestParam String catId,
+            @ApiParam(name="sort",value="排序" ,required = false)
+            @RequestParam String sort,
+            @ApiParam(name="page",value="查询下一页的第几页" ,required = false)
+            @RequestParam Integer page,
+            @ApiParam(name="pageSize",value="分页的每一页显示的记录数" ,required = false)
+            @RequestParam Integer pageSize) {
+        if(StringUtils.isBlank(catId)){
+            return IMoocJSONResult.errorMsg(null);
+        }
+
+        if(page == null){
+            page = 1;
+        }
+
+        if(pageSize == null){
+            pageSize= PAGE_SIZE;
+        }
+        PagedGridResult grid=itemsService.searchItemsByThirdCat(catId,sort,page,pageSize);
+        return IMoocJSONResult.ok(grid);
     }
 
 }
