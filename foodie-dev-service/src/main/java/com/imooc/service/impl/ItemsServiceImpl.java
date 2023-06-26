@@ -3,6 +3,7 @@ package com.imooc.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imooc.enums.CommentLevel;
+import com.imooc.enums.YesOrNo;
 import com.imooc.mapper.*;
 import com.imooc.pojo.*;
 import com.imooc.service.IItemsService;
@@ -11,15 +12,14 @@ import com.imooc.utils.PagedGridResult;
 import com.imooc.vo.CommentLevelCountVO;
 import com.imooc.vo.ItemCommentVO;
 import com.imooc.vo.SearchItemsVO;
+import com.imooc.vo.ShopcartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName StuServiceImpl
@@ -162,6 +162,53 @@ public class ItemsServiceImpl implements IItemsService {
         PagedGridResult grid=new PagedGridResult(page,pageList.getPages(),
                                                 pageList.getTotal(),list);
         return grid;
+    }
+
+
+    /**
+     * 根据规格ids查询最新的购物车中商品数据
+     *
+     * @param specIds
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<ShopcartVO> queryItemsBySpecIds(String specIds) {
+        String[] ids =specIds.split(",");
+        List<Object> specIdsList = new ArrayList<>();
+        Collections.addAll(specIdsList,ids);
+
+        return  itemsMapperCustom.queryItemsBySpecIds(specIdsList);
+    }
+
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public ItemsSpec queryItemsSpec(String specId) {
+        return itemsSpecMapper.selectByPrimaryKey(specId);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public String queryItemMainImgById(String itemId) {
+        ItemsImg itemsImg=new ItemsImg();
+        itemsImg.setItemId(itemId);
+        itemsImg.setIsMain(YesOrNo.YES.type);
+        ItemsImg result= itemsImgMapper.selectOne(itemsImg);
+        return result != null ?result.getUrl() : null;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void decreaseItemSpecStock(String specId, int buyCounts) {
+        //这里会涉及多线程安全的问题
+        //synchronized 不推荐使用，集群下无用，性能低下
+        //锁数据库： 不推荐，导致数据库性能低下
+        //分布式锁 zookeeper redis
+        int result = itemsMapperCustom.decreaseItemSpecStock(specId,buyCounts);
+        if(result!=1){
+            throw new RuntimeException("订单创建失败：订单库存不足！");
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import com.imooc.pojo.ItemsParam;
 import com.imooc.pojo.ItemsSpec;
 import com.imooc.utils.PagedGridResult;
 import com.imooc.vo.CommentLevelCountVO;
+import com.imooc.vo.ShopcartVO;
 
 import java.util.List;
 
@@ -87,4 +88,33 @@ public interface IItemsService {
      */
     PagedGridResult searchItemsByThirdCat(String catId, String sort, Integer page, Integer pageSize);
 
+
+    /**
+     * 根据规格ids查询最新的购物车中商品数据
+     * @param specIds
+     * @return
+     */
+    List<ShopcartVO> queryItemsBySpecIds(String specIds);
+
+    /**
+     * 根据商品规格id获取规格对象的具体信息
+     * @param specId
+     * @return
+     */
+    ItemsSpec queryItemsSpec(String specId);
+
+    /**
+     * 根据商品id获得商品图片主图url
+     * @param itemId
+     * @return
+     */
+    String queryItemMainImgById(String itemId);
+
+
+    /**
+     * 减少库存
+     * @param specId
+     * @param buyCounts
+     */
+    void decreaseItemSpecStock(String specId,int buyCounts);
 }

@@ -9,6 +9,7 @@ import com.imooc.utils.IMoocJSONResult;
 import com.imooc.utils.PagedGridResult;
 import com.imooc.vo.CommentLevelCountVO;
 import com.imooc.vo.ItemInfoVO;
+import com.imooc.vo.ShopcartVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -157,6 +158,20 @@ public class ItemsController extends BaseController{
         }
         PagedGridResult grid=itemsService.searchItemsByThirdCat(catId,sort,page,pageSize);
         return IMoocJSONResult.ok(grid);
+    }
+
+    //用于用户长时间未登录网站，刷新购物车中的数据
+    @ApiOperation(value = "根据商品规格ids查询最新商品数据",notes = "根据商品规格ids查询最新商品数据",httpMethod = "GET")
+    @GetMapping("/refresh")
+    public IMoocJSONResult refresh(@ApiParam(name = "itemSpecIds",value = "拼接的规格ids",required = true,example = "1001,1002,1003")
+                                   @RequestParam String itemSpecIds){
+
+        if (StringUtils.isBlank(itemSpecIds)){
+            return IMoocJSONResult.ok();
+        }
+
+        List<ShopcartVO> shopcart = itemsService.queryItemsBySpecIds(itemSpecIds);
+        return IMoocJSONResult.ok(shopcart);
     }
 
 }

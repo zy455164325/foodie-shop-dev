@@ -1,7 +1,7 @@
 package com.imooc.vo;
 
 /**
- * 用于展示商品搜索列表结果得VO
+ * 用于展示商品搜索列表结果的VO
  */
 public class SearchItemsVO {
     /**
